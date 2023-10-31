@@ -28,7 +28,7 @@ export default async function put(req, res) {
       data: {
         username: req.body.username || result.username,
         phone_number: req.body.phone_number || result.phone_number,
-        image: userImage.secure_url || null,
+        image: userImage.secure_url || result.image,
       },
     });
 
