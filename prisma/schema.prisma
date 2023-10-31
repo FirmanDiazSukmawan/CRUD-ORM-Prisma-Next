@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model food_recipes {
+  recipes_id   Int       @id(map: "food_recipe_pkey") @default(autoincrement())
+  name_recipes String    @db.VarChar(255)
+  image        String?   @db.VarChar(255)
+  ingredients  String
+  video        String?   @db.VarChar
+  users_id     Int
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
+  users        users     @relation(fields: [users_id], references: [users_id], onDelete: NoAction, onUpdate: NoAction, map: "food_recipe_user_id_fkey")
+}
+
+model users {
+  users_id     Int            @id @default(autoincrement())
+  username     String         @db.VarChar(255)
+  email        String         @db.VarChar(255)
+  phone_number String?        @db.VarChar(20)
+  password     String         @db.VarChar(255)
+  image        String?        @db.VarChar(255)
+  role         Int?
+  food_recipes food_recipes[]
+}
